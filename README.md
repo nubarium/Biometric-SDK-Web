@@ -28,9 +28,9 @@ The library includes 3 components,
 
 ```html
 <!-- Third party dependency bundle -->
-<script src="//cdn.nubarium.io/nubSdk/nubSdk@latest/nubSdk-third.min.js"></script>
+<script src="//cdn.nubarium.com/nubSdk/nubSdk@latest/nubSdk-third.min.js"></script>
 <!-- Library -->
-<script src="//cdn.nubarium.io/nubSdk/nubSdk@latest/nubSdk-biometrics.min.js"></script>
+<script src="//cdn.nubarium.com/nubSdk/nubSdk@latest/nubSdk-biometrics.min.js"></script>
 ```
 
 ## Integrate
