@@ -218,7 +218,7 @@ let config = {
       until: 10000   // wait for 10 seconds to hide the image
     }
   },
-  autorate: true //Automatic rotate the image to return a landscape image.
+  autorotate: true, //Automatic rotate the image to return a landscape image.
   antispoofing: {     // Default values
     enabled: true,   
     level: 3
