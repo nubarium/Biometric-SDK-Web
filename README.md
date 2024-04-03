@@ -126,10 +126,19 @@ faceCapture.onSuccess((data) => {
   let result = data.result;
   let face = data.face;
   let frame = data.frame;  
+  
+  let resources = data.resources;
+  let face = resources.face;
+  let frame = resources.frame;  
+  
 }).onFail((fail) => {
   let id = fail.id;  
   let reason = fail.reason;
   let result = fail.result;
+  
+  let resources = fail.resources;
+  let face = resources.face;
+  
 }).onError((error) => {
   let errorCode = error.code;
   let errorMsg = error.msg;
@@ -222,7 +231,7 @@ let config = {
   antispoofing: {     // Default values
     enabled: true,   
     level: 3
-  }  
+  }
 };
 // Initialize the component with your custom configuration
 idCapture.init(config);
@@ -261,10 +270,21 @@ idCapture.onSuccess((data) => {
   let front = data.front;
   let back = data.back;  
   let result = data.result;
+  
+  let resources = data.resources;
+  let front = resources.front;
+  let back = resources.back;
+  
 }).onFail((fail) => {
   let id = data.id;  
   let reason = fail.reason;
   let result = fail.result;
+  
+  let resources = fail.resources;
+  let front = resources.front;
+  let back = resources.back;
+ 
+  
 }).onError((error) => {
   let errorCode = error.code;
   let errorMsg = error.msg;
@@ -296,10 +316,15 @@ idCapture.onSuccess((data) => {
 
 **OnFail**
 
-- *reason*: Reason of the fail ( `capture_front_timeout`   ,  `capture_back_timeout`   ,`low_evaluation`  , `ocr_not_readable`, `low_accurate_ocr` )
+- *reason*: Reason of the fail ( `capture_front_timeout`   ,  `capture_back_timeout`   ,`low_evaluation`  , `ocr_not_readable`, `low_accurate_ocr` , `suspicious_attack` , `reputation_report`
+
 - *result*: if the reason capture_low_evaluation, the result is and object with the score. 
+  
   - score: Score index of the evaluation.
-  - retro: List with retro tags  (`high_accurate_ocr`, `ocr_not_readable`, `low_accurate_ocr`, `medium_accurate_ocr`)   . *(Experimental)*
+  
+  - retro: List with retro tags  (`high_accurate_ocr`, `ocr_not_readable`, `low_accurate_ocr`, `medium_accurate_ocr`,  `ip_reputation`, `ip_location`, `device_reputation`, `multi_id_per_session`, `screen_attack`, `low_score`, `max_attempts_exceeded`,  `suspicious_surface`, `print_attack`) .
+  
+    
 
 
 
@@ -424,13 +449,34 @@ To receive the images and result of component execution it is necessary to setti
 ```javascript
 videoRecord.onSuccess((data) => {
   let id = data.id;
+  
   let result = data.result;
   // The following is available just for audio recording.
   let similarity = result.similarity;
   let difference = result.difference;
+  
+  let resources = data.resources;
+  let face = resources.face;
+  let id = resources.id;
+  let front = id.front;
+  let back = id.back;
+  let videos = resources.video;
+  let speech = videos.speech;
+
+  
 }).onFail((fail) => {
   let id = data.id;  
   let reason = fail.reason;
+  let result = fail.result;
+  
+  let resources = data.resources;
+  let face = resources.face;
+  let id = resources.id;
+  let front = id.front;
+  let back = id.back;
+  let videos = resources.video;
+  let speech = videos.speech;
+  
 }).onError((error) => {
   let errorCode = error.code;
   let errorMsg = error.msg;
