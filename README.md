@@ -369,7 +369,8 @@ let config = {
   timeouts: {
     face: 90000,
     front: 120000,
-    back: 120000
+    back: 120000,
+    transcript: 20000
   },
   guide: {  // Enable/Disable image guide
   	front: { 
