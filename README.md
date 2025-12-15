@@ -247,6 +247,7 @@ idCapture.setToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im51Y..
 - **guide** (optional): Defines whether you want to enable the credential guide image to help the end user capture it. By default it will be enabled but you can disable it if desired or indicate the time after which it is disabled.
 - **autorotate** (optional): Flag to force auto rotate (orientation) of the output image for front and back, by default it is disabled. It is recommended to enable it since the OCR reading can give better results
 - **antispoofing** (optional): Configuration to enable or disable credential validation or vary the level of strict to handle.
+- **custom**: Customize additional settings such as the document type. Please review the following [link](https://github.com/nubarium/Biometric-SDK-Web/blob/main/idcapture-document-types.md) for the list of available document types. The default value is **`MEX_IdCard`**. 
 
 #### Step 2: Load the component
 
