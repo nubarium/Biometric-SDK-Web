@@ -1,0 +1,88 @@
+{
+  "repository": "nubarium/biometrics-sdk",
+  "version": "v2 stable",
+  "updated": "2026-09-17",
+  "defaultLocale": "en",
+  "locales": {
+    "en": {
+      "sections": [
+        {
+          "title": "Overview",
+          "pages": [
+            { "path": "README.md", "title": "README", "description": "Scope and guide index" }
+          ]
+        },
+        {
+          "title": "Get started",
+          "pages": [
+            { "path": "docs/01-prerequisites.md", "title": "Prerequisites", "description": "HTTPS, origin, and token" },
+            { "path": "docs/02-quickstart.md", "title": "Quickstart", "description": "The init, load, and start lifecycle" }
+          ]
+        },
+        {
+          "title": "Components",
+          "pages": [
+            { "path": "docs/03-face-capture.md", "title": "FaceCapture", "description": "Face liveness" },
+            { "path": "docs/04-id-capture.md", "title": "IdCapture", "description": "ID capture" },
+            { "path": "docs/05-addons.md", "title": "Optional add-ons", "description": "Face and ID tasks" }
+          ]
+        },
+        {
+          "title": "Implementation",
+          "pages": [
+            { "path": "docs/06-customization.md", "title": "Customization", "description": "Language, intro, and appearance" },
+            { "path": "docs/07-results-errors.md", "title": "Results and errors", "description": "Callbacks and result fields" },
+            { "path": "docs/08-frameworks.md", "title": "Frameworks", "description": "JavaScript, React, Vue, and Next.js" },
+            { "path": "docs/09-troubleshooting.md", "title": "Troubleshooting", "description": "Stage-by-stage checks" }
+          ]
+        },
+        {
+          "title": "Reference",
+          "pages": [
+            { "path": "docs/10-reference-map.md", "title": "Reference", "description": "Methods, events, and terms" }
+          ]
+        }
+      ]
+    },
+    "es": {
+      "sections": [
+        {
+          "title": "Resumen",
+          "pages": [
+            { "path": "es/README.md", "title": "README", "description": "Alcance e índice de la guía" }
+          ]
+        },
+        {
+          "title": "Comienza aquí",
+          "pages": [
+            { "path": "es/docs/01-prerequisites.md", "title": "Requisitos", "description": "HTTPS, origen y token" },
+            { "path": "es/docs/02-quickstart.md", "title": "Primera captura", "description": "Ciclo init, load y start" }
+          ]
+        },
+        {
+          "title": "Componentes",
+          "pages": [
+            { "path": "es/docs/03-face-capture.md", "title": "FaceCapture", "description": "Prueba de vida facial" },
+            { "path": "es/docs/04-id-capture.md", "title": "IdCapture", "description": "Captura de ID" },
+            { "path": "es/docs/05-addons.md", "title": "Capacidades opcionales", "description": "Tareas de rostro e ID" }
+          ]
+        },
+        {
+          "title": "Implementación",
+          "pages": [
+            { "path": "es/docs/06-customization.md", "title": "Personalización", "description": "Idioma, intro y apariencia" },
+            { "path": "es/docs/07-results-errors.md", "title": "Resultados y errores", "description": "Contratos y callbacks" },
+            { "path": "es/docs/08-frameworks.md", "title": "Integración por entorno", "description": "JavaScript, React, Vue y Next.js" },
+            { "path": "es/docs/09-troubleshooting.md", "title": "Solución de problemas", "description": "Diagnóstico por etapa" }
+          ]
+        },
+        {
+          "title": "Referencia",
+          "pages": [
+            { "path": "es/docs/10-reference-map.md", "title": "Mapa de referencia", "description": "Métodos, eventos y términos" }
+          ]
+        }
+      ]
+    }
+  }
+}
