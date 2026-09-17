@@ -2,7 +2,8 @@
 
 [Leer en español](es/README.md)
 
-This guide covers Web SDK v2: which files to load, how to obtain a short-lived token, how to run `FaceCapture` or `IdCapture`, and how to handle the result. The component lifecycle is `init → load → start`.
+This guide covers Web SDK v2: which files to load, how to obtain a short-lived token, how to run `FaceCapture` or `IdCapture`, and how to handle the result. 
+The component lifecycle is `init → load → start`.
 
 > [!IMPORTANT] Keep your Nubarium username, password, and permanent keys out of browser code. Your backend obtains the short-lived JWT and sends only that token to the browser.
 
