@@ -1,4 +1,4 @@
-# Nubarium Web SDK
+# Nubarium Web SDK v2
 
 [Leer en español](es/README.md)
 
