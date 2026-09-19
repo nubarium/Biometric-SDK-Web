@@ -42,6 +42,7 @@ La introducción aparece por defecto en FaceCapture e IdCapture. No hace falta c
 | Si necesitas… | Empieza en… | Después revisa… |
 |---|---|---|
 | Probar una primera captura | [Primera captura](docs/02-quickstart.md) | [Resultados y errores](docs/07-results-errors.md) |
+| Generar tokens y registrar un origen | [Tokens y orígenes autorizados](docs/access-and-origins.md) | [Requisitos](docs/01-prerequisites.md) |
 | Elegir Core, Face, ID o el bundle completo | [Archivos del SDK](docs/02-quickstart.md#elige-los-archivos-del-sdk) | [Capacidades opcionales](docs/05-addons.md) |
 | Integrar prueba de vida facial | [FaceCapture](docs/03-face-capture.md) | [Capacidades opcionales](docs/05-addons.md) |
 | Capturar una identificación | [IdCapture](docs/04-id-capture.md) | [Resultados y errores](docs/07-results-errors.md) |
@@ -59,7 +60,7 @@ Antes de instanciar un componente necesitas:
 - Core cargado antes del archivo modular del componente, o el bundle opcional `nubsdk-all.min.js`;
 - un JWT de corta vida obtenido por tu backend.
 
-Consulta [Requisitos](docs/01-prerequisites.md) para ver el flujo completo.
+Consulta [Requisitos](docs/01-prerequisites.md) para preparar la aplicación y [Tokens y orígenes autorizados](docs/access-and-origins.md) para ver las llamadas a APIv2.
 
 ## Ejemplo mínimo de FaceCapture
 
@@ -99,6 +100,7 @@ Si habilitas navegación, `onExit` comunica una salida elegida por el usuario. U
 ## Mapa del repositorio
 
 - [Requisitos](docs/01-prerequisites.md)
+- [Tokens y orígenes autorizados](docs/access-and-origins.md)
 - [Primera captura](docs/02-quickstart.md)
 - [FaceCapture](docs/03-face-capture.md)
 - [IdCapture](docs/04-id-capture.md)
