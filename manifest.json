@@ -1,7 +1,7 @@
 {
-  "repository": "nubarium/biometrics-sdk",
+  "repository": "nubarium/Biometric-SDK-Web",
   "version": "v2 stable",
-  "updated": "2026-09-17",
+  "updated": "2026-09-18",
   "defaultLocale": "en",
   "locales": {
     "en": {
@@ -16,6 +16,7 @@
           "title": "Get started",
           "pages": [
             { "path": "docs/01-prerequisites.md", "title": "Prerequisites", "description": "HTTPS, origin, and token" },
+            { "path": "docs/access-and-origins.md", "title": "Tokens and allowed origins", "description": "APIv2 requests for tokens and origin registration" },
             { "path": "docs/02-quickstart.md", "title": "Quickstart", "description": "The init, load, and start lifecycle" }
           ]
         },
@@ -56,6 +57,7 @@
           "title": "Comienza aquí",
           "pages": [
             { "path": "es/docs/01-prerequisites.md", "title": "Requisitos", "description": "HTTPS, origen y token" },
+            { "path": "es/docs/access-and-origins.md", "title": "Tokens y orígenes autorizados", "description": "Solicitudes APIv2 para tokens y registro de orígenes" },
             { "path": "es/docs/02-quickstart.md", "title": "Primera captura", "description": "Ciclo init, load y start" }
           ]
         },

@@ -1,9 +1,8 @@
-# Nubarium Web SDK v2
+# Nubarium Web SDK
 
 [Leer en español](es/README.md)
 
-This guide covers Web SDK v2: which files to load, how to obtain a short-lived token, how to run `FaceCapture` or `IdCapture`, and how to handle the result. 
-The component lifecycle is `init → load → start`.
+This guide covers Web SDK v2: which files to load, how to obtain a short-lived token, how to run `FaceCapture` or `IdCapture`, and how to handle the result. The component lifecycle is `init → load → start`.
 
 > [!IMPORTANT] Keep your Nubarium username, password, and permanent keys out of browser code. Your backend obtains the short-lived JWT and sends only that token to the browser.
 
@@ -25,6 +24,7 @@ Do not combine `nubsdk-all.min.js` with modular files. `nubsdk-all-components.mi
 | Task | Guide |
 |---|---|
 | Prepare HTTPS, origin, and token | [Prerequisites](docs/01-prerequisites.md) |
+| Generate tokens and register an origin | [Tokens and allowed origins](docs/access-and-origins.md) |
 | Run the first capture | [Quickstart](docs/02-quickstart.md) |
 | Integrate a component | [FaceCapture](docs/03-face-capture.md) · [IdCapture](docs/04-id-capture.md) |
 | Add signature, voice, OCR, or comparison | [Optional add-ons](docs/05-addons.md) |
@@ -42,7 +42,7 @@ These pages describe the `v2 stable` channel. Confirm access for your account be
 - Core before the component module, or the optional `nubsdk-all.min.js` bundle alone.
 - A short-lived JWT obtained by your backend.
 
-The [prerequisites](docs/01-prerequisites.md) show the token flow.
+See [Prerequisites](docs/01-prerequisites.md) for the checklist and [Tokens and allowed origins](docs/access-and-origins.md) for the API requests.
 
 ## Minimal FaceCapture example
 
@@ -83,6 +83,7 @@ The intro is shown by default for both FaceCapture and IdCapture. You do not nee
 ## Guides
 
 - [Prerequisites](docs/01-prerequisites.md)
+- [Tokens and allowed origins](docs/access-and-origins.md)
 - [Quickstart](docs/02-quickstart.md)
 - [FaceCapture](docs/03-face-capture.md)
 - [IdCapture](docs/04-id-capture.md)
