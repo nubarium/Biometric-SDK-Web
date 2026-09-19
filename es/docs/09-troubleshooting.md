@@ -32,7 +32,7 @@ Compara el origen reportado por el navegador con el registrado:
 console.log(window.location.origin);
 ```
 
-Protocolo, hostname y puerto deben coincidir. Registra el valor exacto y vuelve a ejecutar `load()` con una sesión vigente.
+Protocolo, hostname y puerto deben coincidir. [Registra el valor exacto desde tu backend o herramienta administrativa](access-and-origins.md#registrar-el-origen-de-la-aplicacion) y vuelve a ejecutar `load()` con una sesión vigente.
 
 ## La cámara no abre
 
