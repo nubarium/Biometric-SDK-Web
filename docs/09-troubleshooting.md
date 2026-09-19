@@ -28,7 +28,7 @@ Symptom: `onError` returns `code: "access_denied"` and `reason: "origin_not_regi
 console.log(window.location.origin);
 ```
 
-Compare this exact scheme, hostname, and port with the registered origin. Register it, then retry `load()` with a valid session.
+Compare this exact scheme, hostname, and port with the registered origin. [Register it from your backend or administrative tool](access-and-origins.md#register-an-origin), then retry `load()` with a valid session.
 
 ## The camera does not open
 
