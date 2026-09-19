@@ -16,54 +16,11 @@ Serve the application over HTTPS. HTTP `localhost` can be used for development i
 
 An origin does not automatically include its subdomains or another port.
 
+Register the origin from your backend or an administrative tool using a `control` token. The request body and endpoint are in [Tokens and allowed origins](access-and-origins.md#register-an-origin).
+
 ## Token from your backend
 
-Your server requests a token with the `execution` access profile. APIv2 returns `accessToken`; your application sends that value to the browser as `token`. Permanent credentials stay on the server.
-
-This Express route is an example. `/api/my-middleware/session` is a route **in your own backend**, not a Nubarium endpoint. Replace `requireAuthenticatedUser` with your application's authentication middleware.
-
-```javascript
-app.post("/api/my-middleware/session", requireAuthenticatedUser, async (_req, res) => {
-  const username = process.env.NUBARIUM_USERNAME;
-  const password = process.env.NUBARIUM_PASSWORD;
-  if (!username || !password) {
-    return res.status(500).json({ code: "sdk_credentials_missing" });
-  }
-
-  try {
-    const basicCredentials = Buffer.from(`${username}:${password}`).toString("base64");
-    const response = await fetch("https://apiv2.sdk.nubarium.com/identity/v2/tokens/generate", {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${basicCredentials}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ accessProfile: "execution" })
-    });
-    const identity = await response.json();
-    if (!response.ok || identity.status !== "OK" || typeof identity.accessToken !== "string") {
-      return res.status(502).json({ code: "sdk_session_unavailable" });
-    }
-
-    return res.set("Cache-Control", "no-store").json({ token: identity.accessToken });
-  } catch (_error) {
-    return res.status(502).json({ code: "sdk_session_unavailable" });
-  }
-});
-```
-
-The browser calls that route in your application:
-
-```javascript
-const response = await fetch("/api/my-middleware/session", {
-  method: "POST",
-  credentials: "same-origin"
-});
-
-if (!response.ok) throw new Error("sdk_session_unavailable");
-const { token } = await response.json();
-if (typeof token !== "string" || !token) throw new Error("sdk_session_unavailable");
-```
+Your server requests a token with the `execution` access profile and gives only its `accessToken` to the browser. Your Nubarium credentials and `control` tokens remain on the server. See [Tokens and allowed origins](access-and-origins.md#generate-a-token) for the API request and body; the [quickstart](02-quickstart.md#2-request-a-session) shows how browser code obtains the session from your own backend.
 
 > [!WARNING] Do not put permanent credentials or higher-privilege tokens in `localStorage`, globals, HTML, or client bundles.
 

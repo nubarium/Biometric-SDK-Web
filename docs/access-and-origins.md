@@ -1,65 +1,65 @@
-# Tokens y orígenes autorizados
+# Tokens and allowed origins
 
-[Read in English](../../docs/access-and-origins.md)
+[Leer en español](../es/docs/access-and-origins.md)
 
-Realiza estas llamadas a APIv2 desde tu backend o una herramienta administrativa. No las hagas desde el navegador ni incluyas credenciales permanentes en la configuración del SDK.
+Make these APIv2 calls from your backend or an administrative tool. Do not call them from browser code or include permanent credentials in the SDK configuration.
 
-URL base: `https://apiv2.sdk.nubarium.com`.
+Base URL: `https://apiv2.sdk.nubarium.com`.
 
-## Generar un token
+## Generate a token
 
-Envía las credenciales de la cuenta Nubarium mediante autenticación HTTP Basic:
+Send Nubarium account credentials with HTTP Basic authentication:
 
 ```http
 POST /identity/v2/tokens/generate
-Authorization: Basic <base64(usuario:contraseña)>
+Authorization: Basic <base64(username:password)>
 Content-Type: application/json
 
 {"accessProfile":"control"}
 ```
 
-El body JSON selecciona un perfil de acceso:
+The JSON body must select one access profile:
 
-| Perfil | Uso | Dónde permanece |
+| Profile | Use | Where it stays |
 |---|---|---|
-| `execution` | Ejecutar FaceCapture o IdCapture | Tu backend lo obtiene y entrega al navegador únicamente este JWT efímero |
-| `api` | Operar procesos, ejecuciones, resultados, recursos y preservaciones | Tu backend |
-| `control` | Administrar orígenes, configuraciones y almacenamiento | Tu backend o herramienta administrativa |
-| `backend` | Combinar las capacidades de `api` y `control` cuando un mismo servicio necesita ambas | Sólo un backend de confianza |
+| `execution` | Run FaceCapture or IdCapture | Your backend obtains it and passes only this short-lived JWT to the browser |
+| `api` | Operate processes, executions, results, resources, and preservation | Your backend |
+| `control` | Manage origins, configurations, and storage | Your backend or administrative tool |
+| `backend` | Combine `api` and `control` capabilities when one service needs both | A trusted backend only |
 
-Para una sesión del SDK, envía la misma solicitud con `{"accessProfile":"execution"}`. Una respuesta `200 OK` a la solicitud `control` anterior tiene esta forma (todos los valores son ilustrativos):
+For an SDK session, send the same request with `{"accessProfile":"execution"}`. A `200 OK` response for the `control` request above has this shape (all values below are illustrative):
 
 ```json
 {
   "tokenType": "Bearer",
-  "accessToken": "<JWT-oculto>",
-  "bearer_token": "<JWT-oculto>",
+  "accessToken": "<redacted-JWT>",
+  "bearer_token": "<redacted-JWT>",
   "expiresIn": 900,
   "exp": 1787302800
 }
 ```
 
-`Bearer` es el esquema de autorización indicado por `tokenType`. `bearer_token` es un alias legado temporal del mismo valor de `accessToken`; las integraciones nuevas deben usar `accessToken`. `expiresIn` expresa la vigencia en segundos desde la emisión y `exp` el vencimiento absoluto en tiempo Unix (segundos). El JWT firmado contiene su `tenantId`, `jti`, perfil, scopes y el mismo `exp`; no uses campos decodificados sin verificar primero la firma, audiencia y vigencia.
+`Bearer` is the authorization scheme identified by `tokenType`. `bearer_token` is a temporary legacy alias with the same value as `accessToken`; new integrations must use `accessToken`. `expiresIn` is the lifetime in seconds from issuance and `exp` is the absolute Unix expiration time in seconds. The signed JWT contains its `tenantId`, `jti`, profile, scopes, and the same `exp`; do not trust decoded claims without first verifying its signature, audience, and validity.
 
-La respuesta incluye el header `X-Nubarium-Request-Id` para correlación operativa. La emisión también puede responder `400` (perfil inválido), `401` (credenciales Basic incorrectas), `429` (límite de solicitudes) o `503` (fallo temporal). Los errores contienen `requestId` y `error: { code, message, retriable }`. No registres credenciales ni JWT en logs.
+The response includes an `X-Nubarium-Request-Id` header for operational correlation. Token issuance can also return `400` (invalid profile), `401` (invalid Basic credentials), `429` (rate limit), or `503` (temporary service failure). Errors contain `requestId` and `error: { code, message, retriable }`. Do not log credentials or JWTs.
 
-Tu aplicación puede exponer una ruta autenticada para entregar el token `execution` al navegador. `/api/my-middleware/session` en [Primera captura](02-quickstart.md#2-obten-la-sesion) representa una ruta de **tu aplicación**, no de Nubarium. Su respuesta al navegador nunca debe incluir el token `control` ni las credenciales permanentes.
+Your application can expose its own authenticated session route to deliver the `execution` token to the browser. `/api/my-middleware/session` in the [quickstart](02-quickstart.md#2-request-a-session) is an example route in **your application**, not a Nubarium endpoint. Never send the `control` token or permanent credentials to that route's browser response.
 
-## Registrar el origen de la aplicación
+## Register an origin
 
-Usa un token `control` de la misma cuenta que emitirá los tokens `execution` para el SDK. La cuenta debe tener permiso para administrar orígenes (`origins:write`).
+Use a `control` token belonging to the same account that will issue the SDK's `execution` tokens. The account must have permission to manage origins (`origins:write`).
 
 ```http
 POST /control/v2/origins
-Authorization: Bearer <accessToken-de-control>
+Authorization: Bearer <control-accessToken>
 Content-Type: application/json
 
 {"origin":"https://app.example.com"}
 ```
 
-`origin` incluye exactamente protocolo, hostname y puerto cuando exista. No incluye ruta, comodines ni el nombre de una página. Si la aplicación abre `https://app.example.com/capture`, registra `https://app.example.com`. Los subdominios y otros puertos son orígenes distintos. APIv2 determina cuenta y ambiente desde la solicitud autenticada; no los agregues al body.
+`origin` is the exact scheme, hostname, and port, if present. It does not include a path, wildcard, or trailing page name. For `https://app.example.com/capture`, register `https://app.example.com`. Subdomains and other ports are separate origins. APIv2 determines the account and environment from the authenticated request; do not add them to the body.
 
-La respuesta `200 OK` contiene el registro del origen y el resultado de publicación. Ejemplo con valores ilustrativos:
+A successful `200 OK` response contains the origin record and a publication result. Example (illustrative values):
 
 ```json
 {
@@ -88,8 +88,8 @@ La respuesta `200 OK` contiene el registro del origen y el resultado de publicac
 }
 ```
 
-`data.publication` puede ser `null` cuando no haya información de publicación. Comprueba que el origen devuelto coincida con el solicitado y tenga estado `active` antes de ejecutar el SDK. Puedes consultar los orígenes de la cuenta con `GET /control/v2/origins` usando un token del servidor con `origins:read`. El contrato de registro también define respuestas de error `400`, `401`, `403`, `404`, `409`, `429` y `503`. Un `403` puede indicar que faltan permisos `origins:write`; un token `execution` no sirve para registrar orígenes.
+`data.publication` can be `null` when publication details are unavailable. Check that the returned origin matches the one requested and is `active` before running the SDK. You can list the account's origins with `GET /control/v2/origins` using a server-side token with `origins:read`. The registration contract also defines `400`, `401`, `403`, `404`, `409`, `429`, and `503` error responses. A `403` can mean the account or token lacks `origins:write`; an `execution` token cannot be used to register origins.
 
-Este registro autoriza el origen web para el runtime del SDK. No es una opción de CORS en el navegador. Si tu cuenta admite HTTP `localhost` durante desarrollo, registra por separado ese origen exacto; los orígenes de producción usan HTTPS.
+This registration authorizes the web origin for the SDK runtime. It is not a browser-side CORS setting. If your account allows HTTP `localhost` during development, register that exact development origin separately; production origins use HTTPS.
 
-Siguiente: [revisa los demás requisitos](01-prerequisites.md) o [ejecuta una captura](02-quickstart.md).
+Next: [check the other prerequisites](01-prerequisites.md) or [run a capture](02-quickstart.md).
