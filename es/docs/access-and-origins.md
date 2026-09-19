@@ -33,13 +33,12 @@ Para una sesión del SDK, envía la misma solicitud con `{"accessProfile":"execu
 {
   "tokenType": "Bearer",
   "accessToken": "<JWT-oculto>",
-  "bearer_token": "<JWT-oculto>",
   "expiresIn": 900,
   "exp": 1787302800
 }
 ```
 
-`Bearer` es el esquema de autorización indicado por `tokenType`. `bearer_token` es un alias legado temporal del mismo valor de `accessToken`; las integraciones nuevas deben usar `accessToken`. `expiresIn` expresa la vigencia en segundos desde la emisión y `exp` el vencimiento absoluto en tiempo Unix (segundos). El JWT firmado contiene su `tenantId`, `jti`, perfil, scopes y el mismo `exp`; no uses campos decodificados sin verificar primero la firma, audiencia y vigencia.
+`Bearer` es el esquema de autorización indicado por `tokenType`. Usa `accessToken` como credencial. `expiresIn` expresa la vigencia en segundos desde la emisión y `exp` el vencimiento absoluto en tiempo Unix (segundos). El JWT firmado contiene su `tenantId`, `jti`, perfil, scopes y el mismo `exp`; no uses campos decodificados sin verificar primero la firma, audiencia y vigencia.
 
 La respuesta incluye el header `X-Nubarium-Request-Id` para correlación operativa. La emisión también puede responder `400` (perfil inválido), `401` (credenciales Basic incorrectas), `429` (límite de solicitudes) o `503` (fallo temporal). Los errores contienen `requestId` y `error: { code, message, retriable }`. No registres credenciales ni JWT en logs.
 
