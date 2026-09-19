@@ -33,13 +33,12 @@ For an SDK session, send the same request with `{"accessProfile":"execution"}`. 
 {
   "tokenType": "Bearer",
   "accessToken": "<redacted-JWT>",
-  "bearer_token": "<redacted-JWT>",
   "expiresIn": 900,
   "exp": 1787302800
 }
 ```
 
-`Bearer` is the authorization scheme identified by `tokenType`. `bearer_token` is a temporary legacy alias with the same value as `accessToken`; new integrations must use `accessToken`. `expiresIn` is the lifetime in seconds from issuance and `exp` is the absolute Unix expiration time in seconds. The signed JWT contains its `tenantId`, `jti`, profile, scopes, and the same `exp`; do not trust decoded claims without first verifying its signature, audience, and validity.
+`Bearer` is the authorization scheme identified by `tokenType`. Use `accessToken` as the credential. `expiresIn` is the lifetime in seconds from issuance and `exp` is the absolute Unix expiration time in seconds. The signed JWT contains its `tenantId`, `jti`, profile, scopes, and the same `exp`; do not trust decoded claims without first verifying its signature, audience, and validity.
 
 The response includes an `X-Nubarium-Request-Id` header for operational correlation. Token issuance can also return `400` (invalid profile), `401` (invalid Basic credentials), `429` (rate limit), or `503` (temporary service failure). Errors contain `requestId` and `error: { code, message, retriable }`. Do not log credentials or JWTs.
 
