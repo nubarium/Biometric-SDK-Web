@@ -81,6 +81,64 @@ El resultado OCR aparece en `result.addons`. Las imágenes continúan pertenecie
 
 Un arreglo `addons` vacío significa que no se ejecutaron tareas opcionales. `resources` puede omitirse cuando la respuesta no incluye bytes inline.
 
+## Captura de pasaporte
+
+Para capturar un pasaporte mexicano, selecciona `MEX_Passport`.
+Se captura únicamente la página con fotografía, datos personales y las
+dos líneas inferiores de lectura automática. No se solicita reverso.
+
+Este ejemplo utiliza el canal `v2/latest`. Carga sus archivos CSS, Core
+e ID desde el mismo canal:
+
+```html
+<link rel="stylesheet"
+      href="https://cdn.nubarium.com/nubSdk/v2/latest/assets/css/nubSdk-biometrics.css">
+
+<div id="passport-component"></div>
+
+<script src="https://cdn.nubarium.com/nubSdk/v2/latest/js/nubsdk-core.min.js"></script>
+<script src="https://cdn.nubarium.com/nubSdk/v2/latest/js/nubsdk-id.min.js"></script>
+```
+
+Reutiliza el token de ejecución obtenido por tu backend y tus manejadores
+de resultado:
+
+```javascript
+const passport = new IdCapture();
+
+passport.setToken(token);
+passport.setDocumentFamily("MEX_Passport");
+
+passport.onSuccess(handleDocument);
+passport.onFail(handleRejectedDocument);
+passport.onError(handleTechnicalError);
+
+passport.init({
+  rootElement: "passport-component"
+});
+
+passport.load(() => passport.start());
+```
+
+### Recibir también los datos OCR
+
+Para incluir los datos leídos del pasaporte, sustituye únicamente
+el bloque `init()` anterior por:
+
+```javascript
+passport.init({
+  rootElement: "passport-component",
+  addons: [{ key: "documentOcr", required: true }]
+});
+```
+
+El resultado OCR se entrega en `payload.result.addons`.
+No configures `after: "back"`: el pasaporte sólo tiene una captura.
+La introducción del componente se muestra por defecto.
+
+Al abandonar la pantalla, ejecuta `passport.clear()` para liberar
+la cámara y los recursos.
+
 ## Buenas prácticas de UX
 
 - Explica cuántos lados se capturarán antes de solicitar cámara.
